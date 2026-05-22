@@ -1,7 +1,8 @@
+# Investment Analyst Skill
 
-##Skills structure
+## Skill Structure
 
-```
+```text
 investment-analyst-skill/
 ├── SKILL.md                        ← Core logic, routing, output format
 └── references/
@@ -13,17 +14,16 @@ investment-analyst-skill/
     ├── arbitrage-funds.md          ← Futures spread, tax advantage table, AUM thresholds
     ├── index-funds.md              ← Tracking error, core-satellite model, active vs passive
     └── crypto.md                   ← MVRV ratio, custody, tax treatment, allocation caps
-``` 
+```
 
-## How to Install 
-Download the .skill file and install it in your Claude environment. Once installed, trigger it naturally — say things like: 
+## How to Install
 
-"Analyze Nifty 50 index fund vs active large cap fund for a 30-year-old moderate investor" 
+Download the `.skill` file and install it in your Claude environment.
+Once installed, trigger it naturally — say things like:
 
-"Should I add BTC to my portfolio? I'm 35, aggressive risk appetite" 
-
-"Compare VOO vs QQQ for an Indian investor investing via LRS" 
-
-"Build me a ₹50,000/month SIP portfolio — moderate risk, 15-year horizon" 
-
-"Evaluate HDFC Mid-Cap Opportunities Fund" 
+- "Analyze Nifty 50 index fund vs active large cap fund for a 30-year-old
+  moderate investor"
+- "Should I add BTC to my portfolio? I'm 35, aggressive risk appetite"
+- "Compare VOO vs QQQ for an Indian investor investing via LRS"
+- "Build me a ₹50,000/month SIP portfolio — moderate risk, 15-year horizon"
+- "Evaluate HDFC Mid-Cap Opportunities Fund"

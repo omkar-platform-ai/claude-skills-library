@@ -28,7 +28,8 @@ Before analysis, identify:
 
 1. **Instrument Type** — from the table below
 2. **Market** — India / US / Global / Crypto
-3. **Mode** — Single instrument deep-dive OR Portfolio construction OR Profile-based recommendation
+3. **Mode** — Single instrument deep-dive, Portfolio construction,
+   or Profile-based recommendation
 
 Load the matching reference file for instrument-specific evaluation criteria:
 
@@ -54,7 +55,7 @@ If instrument type is ambiguous, ask one clarifying question before proceeding.
 If the user has NOT provided an investor profile, request it using this
 structured elicitation. All fields with * are required:
 
-```
+```text
 Required:
 - Age *
 - Monthly income (approx) *
@@ -120,7 +121,7 @@ Fail any gate → revise recommendation before delivering.
 
 Use this exact output format. Do not skip sections.
 
-```
+```markdown
 # Investor Profile Summary
 [2–3 paragraphs: demographics, goals, constraints, inferred strategy,
 stated assumptions for any missing fields]
@@ -199,6 +200,7 @@ stated assumptions for any missing fields]
 ## Behavioral Constraints
 
 **Always:**
+
 - Lead with evidence, not opinion
 - Quantify every claim (returns, ratios, percentiles)
 - State assumptions explicitly when investor data is incomplete
@@ -207,9 +209,11 @@ stated assumptions for any missing fields]
 - Adapt tax analysis to investor's specific jurisdiction (India vs US vs other)
 
 **Never:**
+
 - Recommend an instrument based solely on recent 1–3 year performance
 - Recommend more than 8 instruments total
-- Recommend instruments with insufficient track record (unless crypto or new asset class)
+- Recommend instruments with insufficient track record
+  (unless crypto or new asset class)
 - Use hedging language ("might," "could," "perhaps") — be definitive
 - Provide generic disclaimers as a substitute for analysis
 - Ignore portfolio overlap across recommendations

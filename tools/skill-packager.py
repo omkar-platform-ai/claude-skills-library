@@ -26,15 +26,28 @@ def package_skill(skill_path, output_dir=None):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python skill-packager.py <skill-path> [--output <dir>]")
+        print("Usage: python skill-packager.py <skill-path-or-skills-dir> [--output <dir>]")
         sys.exit(1)
-    
-    skill_path = sys.argv[1]
+
+    skill_path = Path(sys.argv[1])
     output_dir = "."
-    
-    if--output" in sys.argv:
+
+    if "--output" in sys.argv:
         idx = sys.argv.index("--output")
         output_dir = sys.argv[idx + 1]
-    
-    success = package_skill(skill_path, output_dir)
+
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+    if (skill_path / "SKILL.md").exists():
+        targets = [skill_path]
+    elif skill_path.is_dir():
+        targets = sorted(p for p in skill_path.iterdir() if (p / "SKILL.md").exists())
+        if not targets:
+            print(f"⚠️  No skills found under {skill_path}")
+            sys.exit(0)
+    else:
+        print(f"❌ Path not found: {skill_path}")
+        sys.exit(1)
+
+    success = all(package_skill(t, output_dir) for t in targets)
     sys.exit(0 if success else 1)

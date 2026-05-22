@@ -35,7 +35,7 @@ def validate_skill(skill_path):
         with open(skill_path / "SKILL.md") as f:
             content = f.read()
             # Extract YAML frontmatter
-            intent.startswith("---"):
+            if content.startswith("---"):
                 _, yaml_text, _ = content.split("---", 2)
                 yaml.safe_load(yaml_text)
     except Exception as e:

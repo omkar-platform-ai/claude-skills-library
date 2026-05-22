@@ -33,9 +33,21 @@ def run_evals(eval_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        prge: python eval-runner.py <eval-path>")
+        print("Usage: python eval-runner.py <eval-path-or-skills-dir>")
         sys.exit(1)
-    
-    eval_path = Path(sys.argv[1])
-    success = run_evals(eval_path)
+
+    target = Path(sys.argv[1])
+
+    if target.is_file():
+        eval_paths = [target]
+    elif target.is_dir():
+        eval_paths = sorted(target.glob("*/evals/eval_set.json"))
+        if not eval_paths:
+            print(f"⚠️  No eval_set.json files found under {target}")
+            sys.exit(0)
+    else:
+        print(f"❌ Path not found: {target}")
+        sys.exit(1)
+
+    success = all(run_evals(p) for p in eval_paths)
     sys.exit(0 if success else 1)

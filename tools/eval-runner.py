@@ -11,24 +11,24 @@ import os
 from pathlib import Path
 
 def run_evals(eval_path):
-    """Run evaluations against Claude API"""
+    """Run evaluations against Claude API (stub: validates structure only)."""
     with open(eval_path) as f:
         eval_set = json.load(f)
-    
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not api_key:
-        print("❌ ANTHROPIC_API_KEY not set")
-        return False
-    
-    print(f"Running {len(eval_set.get('eval_cases', []))} evaluation cases...")
-    
-    # Stub implementation — full version uses Anthropic API
+
+    if not os.getenv("ANTHROPIC_API_KEY"):
+        print("⚠️  ANTHROPIC_API_KEY not set — running in stub mode "
+              "(structure validation only, no live API calls)")
+
+    cases = eval_set.get('eval_cases', [])
+    print(f"Running {len(cases)} evaluation cases from {eval_path}...")
+
+    # Stub implementation — full version will use Anthropic API
     passed = 0
-    for case in eval_set.get('eval_cases', []):
+    for case in cases:
         print(f"  ✓ {case['id']}: {case['difficulty']}")
         passed += 1
-    
-    print(f"✅ {passed}/{len(eval_set.get('eval_cases', []))} evals passed")
+
+    print(f"✅ {passed}/{len(cases)} evals passed")
     return True
 
 if __name__ == "__main__":

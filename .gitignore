@@ -28,4 +28,3 @@ venv/
 .eval-results/
 .skill-cache/
 skills/*/.pytest_cache/
-*.skill

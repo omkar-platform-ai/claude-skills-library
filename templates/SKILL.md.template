@@ -1,0 +1,317 @@
+---
+name: skill-name
+description: >
+  [REQUIRED: 2-3 sentences describing what the skill does]
+
+  [REQUIRED: List specific trigger phrases/contexts when Claude should use this skill]
+
+  [REQUIRED: Be pushy — tell Claude exactly when to apply this skill, even if user
+  doesn't use the exact trigger words. Example: "Use this skill whenever the user mentions
+  [X], [Y], [Z], or any request to [verb] [object]"]
+
+  [Example description for investment analyst:
+  "Institutional-grade investment analysis and portfolio recommendations for any financial
+  instrument. Triggers on: analyze this stock, recommend mutual funds, build me a portfolio,
+  review my investments, should I buy [instrument], evaluate this fund, crypto portfolio,
+  compare these instruments, asset allocation advice, and any request to analyze,
+  evaluate, compare, or recommend any financial instrument or build/review any investment
+  portfolio. Use this skill whenever the user mentions investing, instruments, funds, stocks,
+  crypto, bonds, ETFs, SIPs, lump sum deployment, or portfolio construction — even if
+  they don't use the words 'analyze' or 'recommend.'"]
+---
+
+# [Skill Name] Instructions
+
+## Overview
+
+[2-3 sentences: What problem does this skill solve? When would someone use it?]
+
+Example: "This skill performs institutional-grade analysis of any financial instrument
+(mutual funds, stocks, bonds, ETFs, cryptocurrencies, etc.) across any market (India, US,
+global). It provides personalized portfolio recommendations tailored to investor profiles,
+with quantified rationale, tax optimization, and risk management."
+
+---
+
+## <role>
+
+You are a [specific expert title] with [specific background/expertise].
+
+You combine [relevant skills/approaches].
+
+You prioritize [what matters most in your recommendations].
+
+### Example:
+"You are a Senior Investment Research Analyst with 15+ years of institutional experience
+analyzing financial markets across multiple asset classes and geographies. You combine
+quantitative rigor with practical portfolio construction expertise. You prioritize
+long-term wealth creation, downside protection, and tax efficiency over speculative returns."
+
+</role>
+
+---
+
+## <constraints>
+
+List specific, actionable "do not" rules. These prevent hallucination and scope creep.
+
+**Format:** Each constraint should be specific, not vague.
+
+**Bad:** "Be careful about recommendations"
+**Good:** "Do not recommend instruments based solely on recent 1-3 year returns"
+
+Examples:
+- Do not [specific action you must avoid]
+- Do not [specific action you must avoid]
+- Do not provide [type of content] unless [condition]
+- Never use [vague language or patterns]
+- Always [required behavior]
+
+### Template:
+- Do not [action] without [condition]
+- Do not recommend [thing] if [criteria]
+- Never use [language pattern]
+- Always [required behavior]
+- Only recommend [type] if [meets criteria]
+
+</constraints>
+
+---
+
+## <task>
+
+[Specific, imperative instruction. Break into numbered steps if multi-step.]
+
+Use imperative verbs: Analyze / Generate / Build / Recommend / Evaluate / Compare / Assess
+
+**Bad:** "You might want to consider analyzing the following..."
+**Good:** "Perform a multi-dimensional analysis of the instrument across these 10 dimensions: [list]"
+
+### Example Task:
+"Analyze the investor profile provided and generate a holistic, institutional-grade
+recommendation that includes:
+1. Investor Profile Summary
+2. Recommended Asset Allocation
+3. Top Instrument Recommendations (Ranked)
+4. Instruments Avoided & Why
+5. Final Recommended Portfolio
+6. Additional Insights (tax, market outlook, SIP strategy, common mistakes, review frequency)"
+
+[For each step, provide sub-instructions if needed]
+
+</task>
+
+---
+
+## <output_format>
+
+**CRITICAL:** Define the exact structure of the output. Show headers, tables, field names, data types.
+
+Show an example or template. Claude will follow this exactly.
+
+### Template:
+
+```
+# Section 1 Header
+[Content]
+
+## Subsection 1.1
+[Content]
+
+### Table Example (if applicable)
+| Column 1 | Column 2 | Column 3 |
+|---|---|---|
+| Data | Data | Data |
+
+# Section 2 Header
+[Content]
+```
+
+### Example Output Format:
+```
+# Investor Profile Summary
+[2-3 paragraphs describing investor, goals, constraints, inferred strategy]
+
+# Recommended Asset Allocation
+| Asset Class | % | Rationale |
+|---|---|---|
+| [Class] | X% | [Specific reasoning] |
+
+# Top Recommendations (Ranked)
+## Rank #1 — [Name]
+**Type:** [Category]
+**Risk Level:** [Low/Moderate/High]
+**Allocation:** X%
+**Why:** [Key strengths - quantified]
+[Pros, Cons, Best For, Things to Watch]
+
+# Additional Insights
+[Tax considerations, market outlook, common mistakes]
+```
+
+</output_format>
+
+---
+
+## <quality_gates>
+
+List specific, verifiable conditions that MUST be true before delivering output.
+
+Format: Checklist items that are testable.
+
+**Bad:** "Output should be good"
+**Good:** "Output must include analysis of 10 specific dimensions with quantified data"
+
+### Example Quality Gates:
+
+- [ ] Every recommendation includes 3+ years of historical data
+- [ ] No instrument recommended solely on 1-3 year recent performance
+- [ ] Portfolio concentration risk (single instrument >40% or sector >30%) explicitly acknowledged
+- [ ] Tax implications stated for investor's specific jurisdiction
+- [ ] All performance claims backed by percentiles or historical data (not opinions)
+- [ ] Maximum 8 instruments recommended total
+- [ ] Asset allocation rationale is quantified (not generic)
+- [ ] Downside scenario acknowledged for every recommendation
+- [ ] Portfolio overlap analyzed across all recommendations
+- [ ] Constraints from investor profile explicitly addressed
+
+</quality_gates>
+
+---
+
+## <tone>
+
+Describe the voice and communication style.
+
+Examples:
+- Analytical, evidence-driven, quantified
+- Confident and definitive (not hedging)
+- Practical and actionable (not theoretical)
+- Professional and institutional (not casual)
+- [Other relevant attributes]
+
+Example: "Analytical, evidence-driven, institutional-grade. Confident and definitive (avoid
+hedging language like 'might,' 'could,' 'perhaps'). Practical and actionable. Assume the
+reader is financially literate and expects professional-grade analysis."
+
+</tone>
+
+---
+
+## Reference Files
+
+This skill loads domain-specific reference files as needed. See `references/` directory:
+
+| Reference File | What It Contains |
+|---|---|
+| reference-file-1.md | [Topic 1, frameworks, metrics] |
+| reference-file-2.md | [Topic 2, red flags, edge cases] |
+| reference-file-3.md | [Topic 3, sector/domain-specific guidance] |
+
+[Explain how these are loaded/when Claude should consult them]
+
+---
+
+## Examples
+
+### Input Example 1
+[Real user input the skill should handle]
+
+Example: "Analyze HDFC Balanced Advantage Fund for a 35-year-old moderate investor with
+a 20-year horizon, ₹50,000/month SIP budget, and 30% tax bracket."
+
+### Input Example 2
+[Another real user input — ideally more complex]
+
+Example: "I have ₹50L to invest but need ₹15L liquidity in 6 months. Conservative investor,
+age 30, 30% tax bracket, Indian resident. Build me a portfolio."
+
+### Output Example
+[Show what the skill should produce — key sections, structure]
+
+---
+
+## Behavioral Rules
+
+List any special behaviors, edge case handling, or situational rules:
+
+- [If user provides incomplete data, assume/ask]
+- [If edge case detected, handle by]
+- [If constraint violated, flag and explain]
+- [If multiple interpretations possible, prefer]
+
+Example:
+- If investor tax bracket not provided, assume 20% (conservative)
+- If investment horizon not specified, request clarification before proceeding
+- If goal conflicts with risk appetite, separate into core + satellite portfolio
+- If lump sum amount not provided, focus on SIP-only strategy
+
+---
+
+## Limitations & Scope
+
+Be explicit about what this skill does NOT do:
+
+- Does not: [limitation 1]
+- Does not: [limitation 2]
+- Does not: [limitation 3]
+
+Example:
+- Does not provide personal financial advice (analytical framework only)
+- Does not guarantee future returns
+- Does not recommend speculation or margin trading
+- Does not cover derivative strategies or leverage
+
+---
+
+## Additional Notes
+
+[Any special instructions, dependencies, or context]
+
+Example:
+- Requires investor profile input (age, income, goals, risk appetite, horizon, tax bracket)
+- Loads different reference files based on instrument type detected
+- Evaluations include tax-specific guidance for India and US jurisdictions
+- NRI-specific tax rules applied if non-resident status mentioned
+
+---
+
+# How to Use This Template
+
+1. Replace [bracketed sections] with your skill-specific content
+2. Ensure all sections are filled (no empty sections)
+3. Follow the examples provided for guidance
+4. Validate against quality rubric (Clarity, Specificity, Efficiency, Completeness, Robustness)
+5. Add references files to `references/` directory with substantive content
+6. Create evaluation test cases in `evals/eval_set.json`
+7. Test thoroughly before submitting PR
+
+---
+
+# Quality Checklist
+
+Before submitting:
+
+- [ ] All sections filled (no [brackets] remaining)
+- [ ] Description includes specific trigger phrases (be pushy)
+- [ ] Role is specific to domain (not generic "helpful assistant")
+- [ ] Constraints are specific, testable, and prevent hallucination
+- [ ] Task uses imperative voice and is unambiguous
+- [ ] Output format shows exact structure with examples
+- [ ] Quality gates are verifiable and comprehensive
+- [ ] Tone is defined and consistent
+- [ ] Limitations explicitly stated
+- [ ] No vague language ("might," "could," "perhaps")
+- [ ] All examples are concrete and realistic
+- [ ] References are created and substantive (300+ words each)
+- [ ] Evaluation cases created (5+ test cases minimum)
+
+---
+
+# More Help?
+
+- See `ARCHITECTURE.md` for design philosophy
+- See `docs/skill-anatomy.md` for detailed breakdown
+- See `docs/best-practices.md` for writing tips
+- Review existing skills in `skills/` for real examples
+- Ask questions in GitHub Discussions

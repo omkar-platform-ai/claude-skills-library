@@ -14,6 +14,9 @@ Usage:
     # Manual: force-release one skill at its current version
     python tools/release_skills.py --skill-path skills/contributed/<name>
 
+    # Bootstrap: release every skill at its current version (skips existing tags)
+    python tools/release_skills.py --release-all
+
     # Dry run: print what would be released without invoking gh
     python tools/release_skills.py --before-sha <SHA> --dry-run
 
@@ -93,6 +96,24 @@ def detect_bumped(before_sha):
             "previous_version": prev_v or None,
         })
     return bumped
+
+
+def all_targets():
+    targets = []
+    for skill_dir, tier, meta_path in collect_current_skills():
+        meta = load_yaml(meta_path.read_text(encoding="utf-8")) or {}
+        version = str(meta.get("version", "")).strip()
+        if not SEMVER_RE.match(version):
+            print(f"SKIP {skill_dir.name}: invalid version '{version}'", file=sys.stderr)
+            continue
+        targets.append({
+            "name": meta.get("name", skill_dir.name),
+            "path": skill_dir.relative_to(REPO_ROOT).as_posix(),
+            "tier": tier,
+            "version": version,
+            "previous_version": None,
+        })
+    return targets
 
 
 def manual_target(skill_path):
@@ -180,15 +201,22 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--before-sha", help="Previous commit SHA to diff against")
     parser.add_argument("--skill-path", help="Release a single skill by its directory path")
+    parser.add_argument(
+        "--release-all",
+        action="store_true",
+        help="Release every skill at its current version (skips existing tags)",
+    )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    if args.skill_path:
+    if args.release_all:
+        targets = all_targets()
+    elif args.skill_path:
         targets = manual_target(args.skill_path)
     elif args.before_sha:
         targets = detect_bumped(args.before_sha)
     else:
-        parser.error("provide --before-sha or --skill-path")
+        parser.error("provide --before-sha, --skill-path, or --release-all")
 
     if not targets:
         print("No version bumps detected. Nothing to release.")

@@ -9,8 +9,13 @@ on:
   workflow_dispatch:
     inputs:
       skill_path:
-        description: 'Skill directory to release (e.g. skills/contributed/foo)'
-        required: true
+        description: 'Single skill directory to release (e.g. skills/contributed/foo). Leave blank if using release_all.'
+        required: false
+      release_all:
+        description: 'Release every skill at its current metadata.yaml version. Skips any skill that already has a tag. Use this once for the initial bootstrap.'
+        required: false
+        default: 'false'
+        type: boolean
 
 permissions:
   contents: write
@@ -37,7 +42,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            python tools/release_skills.py --skill-path "${{ inputs.skill_path }}"
+            if [ "${{ inputs.release_all }}" = "true" ]; then
+              python tools/release_skills.py --release-all
+            elif [ -n "${{ inputs.skill_path }}" ]; then
+              python tools/release_skills.py --skill-path "${{ inputs.skill_path }}"
+            else
+              echo "::error::Provide skill_path or set release_all=true"
+              exit 1
+            fi
           else
             python tools/release_skills.py --before-sha "${{ github.event.before }}"
           fi

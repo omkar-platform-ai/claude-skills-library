@@ -5,7 +5,10 @@ description: >
   and summaries. Use when working with .base files, creating database-like
   views of notes, or when the user mentions Bases, table views, card views,
   filters, or formulas in Obsidian.
-source: https://github.com/kepano/obsidian-skills
+metadata:
+  source: hhttps://github.com/kepano/obsidian-skills
+  author: Steph Ango(kepano) 
+  version: 
 ---
 
 # Obsidian Bases Skill

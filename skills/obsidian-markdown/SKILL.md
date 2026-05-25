@@ -5,7 +5,10 @@ description: >
   callouts, properties, and other Obsidian-specific syntax. Use when working
   with .md files in Obsidian, or when the user mentions wikilinks, callouts,
   frontmatter, tags, embeds, or Obsidian notes.
-source: https://github.com/kepano/obsidian-skills
+metadata:
+  source: hhttps://github.com/kepano/obsidian-skills
+  author: Steph Ango(kepano) 
+  version: 
 ---
 
 # Obsidian Flavored Markdown Skill

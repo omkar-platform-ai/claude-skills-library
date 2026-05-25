@@ -6,7 +6,10 @@ description: >
   clearing context. Produces a chat-only handoff covering decisions, shipped
   changes, key files, running state, verification steps, deferrals, and open
   questions so a fresh agent can continue seamlessly.
-source: https://github.com/nateherkai
+metadata:
+  source: https://github.com/nateherkai
+  author: Nate Her
+  version: 
 ---
 
 # Session Handoff

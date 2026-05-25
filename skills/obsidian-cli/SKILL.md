@@ -8,7 +8,10 @@ description: >
   asks to interact with their Obsidian vault, manage notes, search vault
   content, perform vault operations from the command line, or develop and
   debug Obsidian plugins and themes.
-source: https://github.com/kepano/obsidian-skills
+metadata:
+  source: hhttps://github.com/kepano/obsidian-skills
+  author: Steph Ango(kepano) 
+  version: 
 ---
 
 # Obsidian CLI

@@ -12,6 +12,10 @@ description: >
   Use this skill whenever the user mentions investing, instruments, funds, stocks,
   crypto, bonds, ETFs, SIPs, lump sum deployment, or portfolio construction —
   even if they don't use the words "analyze" or "recommend."
+metadata:
+  source: https://github.com/omkar-platform-ai/claude-skills-library/tree/main/skills
+  author: Omkar G Sonawane
+  version: 
 ---
 
 # Investment Analyst Skill

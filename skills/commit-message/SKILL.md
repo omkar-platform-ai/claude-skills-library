@@ -16,6 +16,10 @@ description: >
   conventions, or asks Claude to summarize code changes into a professional
   commit message — even if the user does not explicitly mention Conventional
   Commits.
+metadata:
+  source: https://github.com/omkar-platform-ai/claude-skills-library/tree/main/skills
+  author: Omkar G Sonawane
+  version: 
 ---
 
 # Commit Messages Instructions

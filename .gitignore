@@ -28,3 +28,10 @@ venv/
 .eval-results/
 .skill-cache/
 skills/*/.pytest_cache/
+
+# Local Claude Code session state
+.claude/
+skills/.claude/
+
+# Local node_modules (markdownlint, etc.)
+node_modules/

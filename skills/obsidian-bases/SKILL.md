@@ -1,6 +1,10 @@
 ---
 name: obsidian-bases
-description: Create and edit Obsidian Bases (.base files) with views, filters, formulas, and summaries. Use when working with .base files, creating database-like views of notes, or when the user mentions Bases, table views, card views, filters, or formulas in Obsidian.
+description: >
+  Create and edit Obsidian Bases (.base files) with views, filters, formulas,
+  and summaries. Use when working with .base files, creating database-like
+  views of notes, or when the user mentions Bases, table views, card views,
+  filters, or formulas in Obsidian.
 source: https://github.com/kepano/obsidian-skills
 ---
 
@@ -8,12 +12,21 @@ source: https://github.com/kepano/obsidian-skills
 
 ## Workflow
 
-1. **Create the file**: Create a `.base` file in the vault with valid YAML content
-2. **Define scope**: Add `filters` to select which notes appear (by tag, folder, property, or date)
-3. **Add formulas** (optional): Define computed properties in the `formulas` section
-4. **Configure views**: Add one or more views (`table`, `cards`, `list`, or `map`) with `order` specifying which properties to display
-5. **Validate**: Verify the file is valid YAML with no syntax errors. Check that all referenced properties and formulas exist. Common issues: unquoted strings containing special YAML characters, mismatched quotes in formula expressions, referencing `formula.X` without defining `X` in `formulas`
-6. **Test in Obsidian**: Open the `.base` file in Obsidian to confirm the view renders correctly. If it shows a YAML error, check quoting rules below
+1. **Create the file**: Create a `.base` file in the vault with valid YAML
+   content
+2. **Define scope**: Add `filters` to select which notes appear (by tag,
+   folder, property, or date)
+3. **Add formulas** (optional): Define computed properties in the `formulas`
+   section
+4. **Configure views**: Add one or more views (`table`, `cards`, `list`, or
+   `map`) with `order` specifying which properties to display
+5. **Validate**: Verify the file is valid YAML with no syntax errors. Check
+   that all referenced properties and formulas exist. Common issues:
+   unquoted strings containing special YAML characters, mismatched quotes in
+   formula expressions, referencing `formula.X` without defining `X` in
+   `formulas`
+6. **Test in Obsidian**: Open the `.base` file in Obsidian to confirm the view
+   renders correctly. If it shows a YAML error, check quoting rules below
 
 ## Schema
 
@@ -114,7 +127,7 @@ filters:
 | `<=` | less than or equal |
 | `&&` | logical and |
 | `\|\|` | logical or |
-| <code>!</code> | logical not |
+| `!` | logical not |
 
 ## Properties
 
@@ -175,7 +188,9 @@ formulas:
 
 ## Key Functions
 
-Most commonly used functions. For the complete reference of all types (Date, String, Number, List, File, Link, Object, RegExp), see [FUNCTIONS_REFERENCE.md](references/FUNCTIONS_REFERENCE.md).
+Most commonly used functions. For the complete reference of all types (Date,
+String, Number, List, File, Link, Object, RegExp), see
+[FUNCTIONS_REFERENCE.md](references/FUNCTIONS_REFERENCE.md).
 
 | Function | Signature | Description |
 |----------|-----------|-------------|
@@ -191,9 +206,12 @@ Most commonly used functions. For the complete reference of all types (Date, Str
 
 When subtracting two dates, the result is a **Duration** type (not a number).
 
-**Duration Fields:** `duration.days`, `duration.hours`, `duration.minutes`, `duration.seconds`, `duration.milliseconds`
+**Duration Fields:** `duration.days`, `duration.hours`, `duration.minutes`,
+`duration.seconds`, `duration.milliseconds`
 
-**IMPORTANT:** Duration does NOT support `.round()`, `.floor()`, `.ceil()` directly. Access a numeric field first (like `.days`), then apply number functions.
+**IMPORTANT:** Duration does NOT support `.round()`, `.floor()`, `.ceil()`
+directly. Access a numeric field first (like `.days`), then apply number
+functions.
 
 ```yaml
 # CORRECT: Calculate days between dates
@@ -433,7 +451,9 @@ Embed in Markdown files:
 
 ### YAML Syntax Errors
 
-**Unquoted special characters**: Strings containing `:`, `{`, `}`, `[`, `]`, `,`, `&`, `*`, `#`, `?`, `|`, `-`, `<`, `>`, `=`, `!`, `%`, `@`, `` ` `` must be quoted.
+**Unquoted special characters**: Strings containing `:`, `{`, `}`, `[`, `]`,
+`,`, `&`, `*`, `#`, `?`, `|`, `-`, `<`, `>`, `=`, `!`, `%`, `@`, `` ` `` must
+be quoted.
 
 ```yaml
 # WRONG - colon in unquoted string
@@ -443,7 +463,8 @@ displayName: Status: Active
 displayName: "Status: Active"
 ```
 
-**Mismatched quotes in formulas**: When a formula contains double quotes, wrap the entire formula in single quotes.
+**Mismatched quotes in formulas**: When a formula contains double quotes,
+wrap the entire formula in single quotes.
 
 ```yaml
 # WRONG - double quotes inside double quotes
@@ -457,7 +478,8 @@ formulas:
 
 ### Common Formula Errors
 
-**Duration math without field access**: Subtracting dates returns a Duration, not a number. Always access `.days`, `.hours`, etc.
+**Duration math without field access**: Subtracting dates returns a Duration,
+not a number. Always access `.days`, `.hours`, etc.
 
 ```yaml
 # WRONG - Duration is not a number
@@ -477,7 +499,8 @@ formulas:
 'if(due_date, (date(due_date) - today()).days, "")'
 ```
 
-**Referencing undefined formulas**: Ensure every `formula.X` in `order` or `properties` has a matching entry in `formulas`.
+**Referencing undefined formulas**: Ensure every `formula.X` in `order` or
+`properties` has a matching entry in `formulas`.
 
 ```yaml
 # This will fail silently if 'total' is not defined in formulas

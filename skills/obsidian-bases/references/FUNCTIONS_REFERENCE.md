@@ -30,7 +30,8 @@
 
 ## Date Functions & Fields
 
-**Fields:** `date.year`, `date.month`, `date.day`, `date.hour`, `date.minute`, `date.second`, `date.millisecond`
+**Fields:** `date.year`, `date.month`, `date.day`, `date.hour`,
+`date.minute`, `date.second`, `date.millisecond`
 
 | Function | Signature | Description |
 |----------|-----------|-------------|
@@ -42,7 +43,8 @@
 
 ## Duration Type
 
-When subtracting two dates, the result is a **Duration** type (not a number). Duration has its own properties and methods.
+When subtracting two dates, the result is a **Duration** type (not a number).
+Duration has its own properties and methods.
 
 **Duration Fields:**
 | Field | Type | Description |
@@ -53,7 +55,9 @@ When subtracting two dates, the result is a **Duration** type (not a number). Du
 | `duration.seconds` | Number | Total seconds in duration |
 | `duration.milliseconds` | Number | Total milliseconds in duration |
 
-**IMPORTANT:** Duration does NOT support `.round()`, `.floor()`, `.ceil()` directly. You must access a numeric field first (like `.days`), then apply number functions.
+**IMPORTANT:** Duration does NOT support `.round()`, `.floor()`, `.ceil()`
+directly. You must access a numeric field first (like `.days`), then apply
+number functions.
 
 ```yaml
 # CORRECT: Calculate days between dates

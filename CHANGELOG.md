@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- `tools/release_skills.py` and `.github/workflows/release-skills.yml`: auto per-skill releases on `metadata.yaml` version bumps. Tag scheme `<skill>-v<version>`, zipped skill directory as the release artifact. Manual `workflow_dispatch` supported.
+- `docs/_config.yml` (Jekyll, cayman theme) and a real `docs/index.md` landing page to enable GitHub Pages from `/docs`.
 
 ## [0.2.0] - 2026-05-25
 ### Added

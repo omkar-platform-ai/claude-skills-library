@@ -1,0 +1,43 @@
+name: Release Skills
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'skills/**/metadata.yaml'
+  workflow_dispatch:
+    inputs:
+      skill_path:
+        description: 'Skill directory to release (e.g. skills/contributed/foo)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Detect bumps and publish per-skill releases
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r tools/requirements.txt
+
+      - name: Release bumped skills
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python tools/release_skills.py --skill-path "${{ inputs.skill_path }}"
+          else
+            python tools/release_skills.py --before-sha "${{ github.event.before }}"
+          fi

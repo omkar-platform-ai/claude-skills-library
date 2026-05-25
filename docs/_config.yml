@@ -1,0 +1,10 @@
+title: Claude Skills Library
+description: Production-grade, vetted skills for Claude AI.
+theme: jekyll-theme-cayman
+markdown: kramdown
+url: https://omkar-platform-ai.github.io
+baseurl: /claude-skills-library
+
+# Source-side exclusions (these live in this Jekyll site root = docs/)
+exclude:
+  - README.md

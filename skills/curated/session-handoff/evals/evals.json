@@ -1,0 +1,44 @@
+{
+  "skill_name": "session-handoff",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Session handoff please.",
+      "description": "Bare trigger phrase; should produce a structured handoff summary.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Returns a chat-only handoff (no files written) covering: decisions, shipped changes, key files, running state, verification steps, deferrals, open questions",
+        "Each section is concrete and references the actual session content, not generic placeholders",
+        "If a section has nothing to report, says so explicitly instead of fabricating content",
+        "Total length is scannable (not a wall of text); uses headings or short bullets",
+        "Ends with a clear pointer to where the next agent should start"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Wrap up this session. We also have a background test run going and a PR waiting on review.",
+      "description": "Handoff must capture in-flight async state.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Explicitly notes the background test run under 'running state' with how to check status",
+        "Notes the open PR under 'verification steps' or 'open questions' with the PR identifier if known",
+        "Does not mark the test run or PR as 'done' when it isn't",
+        "Distinguishes between work that's complete and work that's blocked on external events",
+        "Suggests a specific first action for the next agent (e.g., 'first check test run X')"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "Hand off this session. We changed direction halfway through - we abandoned approach A for approach B - and there's a half-finished refactor on disk that wasn't reverted.",
+      "description": "Hard: must capture context that's not in the diff.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Explicitly documents the A → B pivot in 'decisions' with the reason",
+        "Flags the unreverted half-finished refactor under 'running state' or 'deferrals' as something to clean up or finish",
+        "Identifies files touched by the abandoned approach so the next agent doesn't wonder why they exist",
+        "Lists 'do not redo' items so the next agent doesn't loop on the abandoned approach",
+        "Does not summarise the failed approach as if it were the chosen one"
+      ]
+    }
+  ]
+}

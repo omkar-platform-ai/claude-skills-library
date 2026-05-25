@@ -1,0 +1,44 @@
+{
+  "skill_name": "fitness-advisor",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "I'm a 32-year-old desk worker, 78kg, 178cm. I want to gain muscle but only have 3 evenings a week for the gym. Build me a 12-week plan.",
+      "description": "Standard hypertrophy plan with constrained schedule.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Recommends a 3-day split (e.g., upper/lower/full or push/pull/legs) appropriate for the schedule",
+        "Specifies sets, reps, and rest intervals per exercise rather than just listing movements",
+        "Provides a calorie surplus target with a concrete daily kcal range and protein in grams/day",
+        "Phases the 12 weeks (e.g., volume → intensity → deload) with clear progression rules",
+        "Names recovery, sleep, and tracking metrics the user should monitor weekly"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "I have lower back pain when I deadlift and my doctor cleared me for general training but said 'avoid heavy spinal loading'. I still want to get stronger. What do I do?",
+      "description": "Medium case with a medical constraint that must shape the plan.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Acknowledges the medical constraint as a hard limit, not a suggestion",
+        "Substitutes deadlift with named lower-spine-friendly alternatives (e.g., trap bar deadlift, hip thrust, kettlebell swing) with rationale",
+        "Recommends a structured warm-up and mobility routine targeting the lower back specifically",
+        "Defines a clear stop/scale-back rule (e.g., 'if pain >3/10, deload')",
+        "Avoids prescribing rehab exercises; defers to physio for diagnosis-level work"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "I'm cutting and stalled at 76kg for 5 weeks. I'm eating 1800 kcal, training 5x/week, getting 7 hours sleep, and tracking everything. Help.",
+      "description": "Hard case requiring root-cause analysis of a fat-loss plateau.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Asks for or estimates maintenance kcal to determine if the deficit is real",
+        "Lists at least 3 common causes of a plateau (under-reporting intake, NEAT decline, water retention, metabolic adaptation) and how to test each",
+        "Proposes a specific next intervention (diet break, refeed, recalculation) with a 1-2 week test window",
+        "Warns against arbitrarily cutting kcal further as a first move",
+        "Defines what 'fixed' looks like (e.g., 0.5% bodyweight drop/week sustained for 2 weeks) so progress is measurable"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+name: Validate Skills
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+      - 'tools/**'
+      - '.github/workflows/validate-skills.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'skills/**'
+      - 'tools/**'
+      - '.github/workflows/validate-skills.yml'
+  workflow_dispatch:
+
+jobs:
+  validate-structure:
+    name: Validate skill structure
+    runs-on: ubuntu-latest
+    outputs:
+      report: ${{ steps.run.outputs.report }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r tools/requirements.txt
+      - name: Run skill_validator
+        id: run
+        run: |
+          set +e
+          python tools/skill_validator.py --validate-all | tee validator.txt
+          STATUS=${PIPESTATUS[0]}
+          {
+            echo 'report<<EOF'
+            cat validator.txt
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+          exit $STATUS
+
+  validate-yaml:
+    name: Validate metadata YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Parse every YAML file under skills/
+        run: |
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          import yaml
+
+          failed = False
+          for path in Path("skills").rglob("*.y*ml"):
+              try:
+                  yaml.safe_load(path.read_text(encoding="utf-8"))
+              except yaml.YAMLError as e:
+                  print(f"INVALID YAML: {path}: {e}")
+                  failed = True
+          if failed:
+              sys.exit(1)
+          print("All YAML files under skills/ parse cleanly")
+          PY
+
+  pr-comment:
+    name: Post validation report on PR
+    needs: validate-structure
+    if: github.event_name == 'pull_request' && always()
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const report = `${{ needs.validate-structure.outputs.report }}`;
+            const body = [
+              '### Skill validation report',
+              '',
+              '```',
+              report || '(no output captured)',
+              '```',
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });

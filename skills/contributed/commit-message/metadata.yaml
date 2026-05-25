@@ -1,0 +1,19 @@
+name: commit-message
+version: 1.0.0
+author: Omkar G Sonawane
+created_date: 2026-05-22
+last_updated: 2026-05-25
+description: >
+  Generates strict Conventional Commit compliant git commit messages aligned
+  with enterprise engineering standards and semantic versioning.
+tags: [git, commits, conventional-commits, semver, devops]
+status: stable
+maintainer: omkar-platform-ai
+quality_score: 0.0
+eval_count: 3
+eval_pass_rate: 0.0
+dependencies: []
+compatibility:
+  mcp_required: false
+source:
+  url: https://github.com/omkar-platform-ai/claude-skills-library

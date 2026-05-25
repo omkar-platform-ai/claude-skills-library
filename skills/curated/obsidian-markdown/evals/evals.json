@@ -1,0 +1,44 @@
+{
+  "skill_name": "obsidian-markdown",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Add a callout to my note that flags a warning: 'Don't run migrations against production without a snapshot.'",
+      "description": "Simple callout insertion using Obsidian syntax.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Uses the Obsidian `> [!warning]` callout syntax (or equivalent type like `> [!danger]`), not a plain blockquote",
+        "Callout has the warning text on a continuation `>` line",
+        "Does not invent non-standard callout types not supported by Obsidian",
+        "Suggests a sensible callout title if one is helpful, but does not add filler text",
+        "Markdown still renders cleanly outside Obsidian (graceful degradation)"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Convert my flat tag list at the top of the note into proper Obsidian frontmatter properties: tags=[infra, ops, postgres], priority=high, owner=[[Omkar]].",
+      "description": "Move tags into YAML frontmatter; respect Obsidian property types.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Produces a valid `---` YAML frontmatter block at the top of the note",
+        "Tags are stored as a YAML list, not a comma-separated string",
+        "Owner is preserved as a wikilink-typed property (Obsidian `link` property), not stripped to plain text",
+        "Priority is a string property (not a tag or list)",
+        "Removes the original flat tag line from the body to avoid duplication"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "Embed the diagram from architecture.canvas into my design doc, but only show the 'frontend' group, and embed the second paragraph of intro.md right below it.",
+      "description": "Hard: scoped canvas embed + heading/block reference embed.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Uses the documented `![[architecture.canvas#frontend]]` syntax for the scoped canvas embed",
+        "Uses paragraph/block reference syntax (`![[intro#^block-id]]` or `![[intro#heading]]`) for the prose embed, not raw copy-paste",
+        "Distinguishes between heading (`#`) and block (`^`) references correctly based on what the user asked for",
+        "Does not embed the whole canvas or the whole intro.md by accident",
+        "Notes that block ids may need to be created in the source file if they don't exist yet"
+      ]
+    }
+  ]
+}

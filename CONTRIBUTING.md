@@ -15,6 +15,17 @@ Thank you for your interest in contributing! This guide will walk you through th
 
 ---
 
+## 🗂️ Skill Tiers: Contributed vs Curated
+
+Skills live in one of two subdirectories under `skills/`:
+
+- **`skills/contributed/`** — Skills authored within this repo. This is where your new skill goes by default. See [docs/SKILLS_DEV_GUIDE.md](docs/SKILLS_DEV_GUIDE.md) for the full development guide.
+- **`skills/curated/`** — Skills imported from external, permissively-licensed sources. Require an `UPSTREAM_SOURCE.md` and additional review. See [docs/CURATION_POLICY.md](docs/CURATION_POLICY.md).
+
+If in doubt, start in `contributed/`.
+
+---
+
 ## 📋 Before You Start
 
 ### Check Existing Skills
@@ -54,11 +65,12 @@ Wait for **maintainer approval** before investing time in implementation.
 Before submitting a PR, ensure your skill meets ALL criteria:
 
 ### Structure
-- [ ] Valid SKILL.md with `name` and `description` fields
+- [ ] Valid SKILL.md with `name` and `description` frontmatter (only)
+- [ ] `metadata.yaml` with version, author, dates, status, tags, maintainer
 - [ ] README.md in skill root
-- [ ] At least 2 reference files in `references/`
+- [ ] At least 2 reference files in `references/` (when the skill needs them)
 - [ ] No syntax errors (YAML, JSON, Markdown)
-- [ ] Passes `python tools/skill-validator.py`
+- [ ] Passes `python tools/skill_validator.py skills/contributed/<name>/`
 
 ### Content Quality (5-point scoring)
 - [ ] **Clarity (4+/5)** — Every instruction unambiguous
@@ -74,10 +86,10 @@ Before submitting a PR, ensure your skill meets ALL criteria:
 - [ ] Red flags and edge cases documented
 
 ### Evaluations
-- [ ] Minimum 5 test cases in `evals/eval_set.json`
+- [ ] Minimum 3 test cases in `evals/evals.json`
 - [ ] Mix of easy, medium, hard difficulty
 - [ ] At least 1 edge case test
-- [ ] All tests pass: `python tools/eval-runner.py evals/eval_set.json`
+- [ ] Each case has `id`, `prompt`, `description`, `expected_output_criteria`
 
 ### Documentation
 - [ ] README.md explains what skill does & when to use it
@@ -106,25 +118,28 @@ git checkout -b add/my-skill-name
 ```
 
 ### Step 3: Create Skill Structure
+
+Create the directory under the appropriate tier (default: `contributed/`):
+
 ```bash
-./scripts/create-skill.sh my-skill-name
+mkdir -p skills/contributed/my-skill-name/{references,evals}
+cp templates/SKILL.md.template skills/contributed/my-skill-name/SKILL.md
 ```
 
-This creates:
+Target layout:
 ```
-skills/my-skill-name/
-├── SKILL.md              (template)
-├── README.md             (template)
+skills/contributed/my-skill-name/
+├── SKILL.md              (frontmatter: name + description only)
+├── metadata.yaml         (version, author, dates, status, tags, maintainer)
+├── README.md
 ├── references/
 │   ├── domain1.md
-│   ├── domain2.md
-│   └── README.md
-├── evals/
-│   ├── eval_set.json
-│   └── README.md
-└── tests/
-    └── test_references.py
+│   └── domain2.md
+└── evals/
+    └── evals.json
 ```
+
+See [docs/SKILLS_DEV_GUIDE.md](docs/SKILLS_DEV_GUIDE.md) for the full schema.
 
 ### Step 4: Write SKILL.md
 Follow the structure in `templates/SKILL.md.template`:
@@ -186,7 +201,7 @@ Create 2+ files in `references/`:
 - Clear, organized with good headings
 
 ### Step 6: Write README.md
-Structure (use `templates/README.md.template`):
+Structure:
 
 ```markdown
 # [Skill Name]
@@ -221,34 +236,33 @@ Found an issue? Have improvements? See CONTRIBUTING.md
 ```
 
 ### Step 7: Create Evaluations
-Edit `evals/eval_set.json`:
+Edit `evals/evals.json`:
 
 ```json
 {
-  "eval_cases": [
+  "skill_name": "my-skill-name",
+  "evals": [
     {
       "id": "eval-001",
       "difficulty": "easy",
-      "category": "basic-usage",
-      "input": "Analyze HDFC Balanced Advantage Fund for a 35-year-old moderate investor with 20-year horizon",
+      "prompt": "Analyze HDFC Balanced Advantage Fund for a 35-year-old moderate investor with 20-year horizon",
+      "description": "Basic single-fund analysis with clear investor profile",
       "expected_output_criteria": [
         "Provides fund category assessment",
         "Discusses risk metrics",
         "Includes tax treatment for India",
-        "Gives specific allocation recommendation",
-        "Cites historical performance data"
+        "Gives specific allocation recommendation"
       ]
     },
     {
       "id": "eval-002",
       "difficulty": "hard",
-      "category": "edge-case",
-      "input": "I have ₹50L to invest but also need ₹15L liquidity in 6 months. Conservative investor, 30 years old. Build me a portfolio.",
+      "prompt": "I have ₹50L to invest but also need ₹15L liquidity in 6 months. Conservative investor, 30 years old. Build me a portfolio.",
+      "description": "Edge case: conflicting liquidity and investment goals",
       "expected_output_criteria": [
         "Acknowledges conflicting goals (invest vs liquidity need)",
         "Separates emergency fund from investment portfolio",
         "Avoids locking 50L in long-term instruments",
-        "Suggests liquid fund component",
         "Provides specific split recommendation"
       ]
     }
@@ -257,7 +271,7 @@ Edit `evals/eval_set.json`:
 ```
 
 **Evaluation tips:**
-- Minimum 5 cases; aim for 10
+- Minimum 3 cases; aim for 5+
 - Mix difficulty levels (easy, medium, hard)
 - Include 1+ edge cases (conflicting goals, incomplete data, etc.)
 - Specify exact success criteria
@@ -267,20 +281,16 @@ Edit `evals/eval_set.json`:
 
 ```bash
 # Check structure
-python tools/skill-validator.py skills/my-skill-name/
+python tools/skill_validator.py skills/contributed/my-skill-name/
 
-# Run evaluations
-python tools/eval-runner.py skills/my-skill-name/evals/eval_set.json
-
-# Expected output:
-# ✅ Skill structure valid
-# ✅ 10/10 evals passed
+# Or validate everything at once
+python tools/skill_validator.py --validate-all
 ```
 
 ### Step 9: Submit PR
 
 ```bash
-git add skills/my-skill-name/
+git add skills/contributed/my-skill-name/
 git commit -m "Add my-skill: [description]. Fixes #123"
 git push origin add/my-skill-name
 ```
@@ -301,8 +311,8 @@ Then open PR with this template:
 - Comprehensive README
 
 **Quality Gates:**
-- [x] Passes `skill-validator.py`
-- [x] All 10 evals passing
+- [x] Passes `skill_validator.py`
+- [x] All evals have specific success criteria
 - [x] No anti-patterns detected
 - [x] Reference files substantive (>300 words each)
 - [x] README includes examples
@@ -350,7 +360,7 @@ Open an issue with the skill name + suggestion:
 ### To Submit Improvements
 1. Fork, create branch: `improve/skill-name-improvement`
 2. Make changes following same quality standards
-3. Test improvements: `python tools/eval-runner.py`
+3. Validate: `python tools/skill_validator.py skills/contributed/<name>/`
 4. Submit PR describing what you improved & why
 
 ---
@@ -361,7 +371,7 @@ Open an issue with the skill name + suggestion:
 ```bash
 git checkout -b enhance/tool-name-improvement
 # Edit tools/*.py
-# Test: python tools/tool-name.py --help
+# Test: python tools/<tool_name>.py --help
 # Commit & PR
 ```
 
@@ -453,10 +463,11 @@ Community will review & provide suggestions.
 ## 📚 Resources
 
 - **ARCHITECTURE.md** — Design philosophy & patterns
-- **docs/skill-anatomy.md** — What makes a great skill
-- **docs/best-practices.md** — Writing tips
+- **docs/SKILLS_DEV_GUIDE.md** — Skill development walkthrough
+- **docs/CURATION_POLICY.md** — Rules for importing external skills
+- **docs/MAINTENANCE_SCHEDULE.md** — Cadence for upkeep and reviews
 - **templates/** — Boilerplate to start from
-- **examples/** — Real skills to learn from
+- **skills/contributed/** — Real skills to learn from
 
 ---
 

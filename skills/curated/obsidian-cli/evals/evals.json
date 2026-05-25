@@ -1,0 +1,44 @@
+{
+  "skill_name": "obsidian-cli",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Use the obsidian CLI to create a new note titled 'Weekly Review 2026-05-25' in the Reviews folder with a basic template.",
+      "description": "Simple create-note operation via CLI.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Invokes the `obsidian` CLI with the correct subcommand for creating a note (not a generic shell `touch`)",
+        "Places the note in the Reviews/ folder, not the vault root",
+        "Filename uses the exact title the user requested, sanitised for filesystem safety",
+        "Populates the new note with template content rather than leaving it empty",
+        "Does not fabricate CLI flags; if a needed flag is unknown, says so rather than guessing"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Search the vault for any notes that contain 'TODO:' and have not been modified in the last 30 days. Output a list with file path and last-modified date.",
+      "description": "Search with content and metadata filters; tests CLI flag composition.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Uses obsidian CLI search rather than `grep` on the raw vault filesystem",
+        "Applies a 'modified before' time filter, not just a content match",
+        "Output is a clean list of file path + last-modified date, not raw JSON dumped to the terminal",
+        "Handles zero-result case gracefully with a clear message",
+        "Does not assume vault location; either uses the CLI's default or asks for the vault path"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "I'm developing a plugin. After I edit and save my code, reload the plugin in Obsidian, run my init function via the JS bridge, then take a screenshot of the resulting UI.",
+      "description": "Plugin dev workflow; chains multiple CLI commands.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Chains: reload plugin → execute JS → screenshot, in that order",
+        "Reloads the specific plugin id, not 'all plugins'",
+        "JS execution uses the documented bridge command and captures errors instead of silently failing",
+        "Screenshot is saved to a deterministic path the user can find, not a temp dir",
+        "If the plugin id is unknown, asks for it rather than guessing"
+      ]
+    }
+  ]
+}

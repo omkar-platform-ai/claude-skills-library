@@ -1,0 +1,19 @@
+name: executive-deck-specialist
+version: 1.0.0
+author: Omkar G Sonawane
+created_date: 2026-05-22
+last_updated: 2026-05-25
+description: >
+  Turns documents or topics into consultant-grade presentations using MECE,
+  Pyramid Principle, and SCQA frameworks with speaker notes.
+tags: [presentations, slides, mckinsey, storytelling, executive]
+status: stable
+maintainer: omkar-platform-ai
+quality_score: 0.0
+eval_count: 3
+eval_pass_rate: 0.0
+dependencies: []
+compatibility:
+  mcp_required: false
+source:
+  url: https://github.com/omkar-platform-ai/claude-skills-library

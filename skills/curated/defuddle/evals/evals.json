@@ -1,0 +1,41 @@
+{
+  "skill_name": "defuddle",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Please read https://example.com/blog/architecture-decisions and summarise the key decisions.",
+      "description": "Standard web page; defuddle should be used instead of WebFetch.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Invokes the defuddle CLI rather than WebFetch for an HTML URL",
+        "Passes the URL to defuddle and consumes its markdown output",
+        "Produces a summary based on the cleaned content, not raw HTML",
+        "Does not include nav menus, cookie banners, or other page chrome in the summary"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Read this RFC: https://raw.githubusercontent.com/some/repo/main/docs/RFC-0042.md",
+      "description": "URL ending in .md; defuddle should NOT be used.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Does NOT invoke defuddle for a .md URL",
+        "Uses WebFetch (or equivalent direct fetch) instead",
+        "Explains briefly that defuddle is unnecessary for already-markdown content",
+        "Returns the actual RFC content, not an error"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "I want to read three articles and compare them: https://site-a.com/post1, https://site-b.com/long-article, https://site-c.com/news-piece",
+      "description": "Multiple URLs; defuddle should be applied per-URL with a sensible flow.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Runs defuddle once per URL rather than batching them through WebFetch",
+        "Handles a failure on any single URL without aborting the others",
+        "Produces a side-by-side comparison rather than three separate summaries pasted together",
+        "Does not silently truncate articles; flags if content was unusually large"
+      ]
+    }
+  ]
+}

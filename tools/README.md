@@ -1,24 +1,45 @@
 # Tools & Scripts
 
-## skill-validator.py
-Validates skill structure and YAML syntax.
+Install dependencies:
+
 ```bash
-python tools/skill-validator.py skills/my-skill/
+pip install -r tools/requirements.txt
 ```
 
-## eval-runner.py
-Runs evaluation test cases against Claude API.
-Requires: `ANTHROPIC_API_KEY` environment variable
+## skill_validator.py
+
+Validates skill directory structure, SKILL.md frontmatter, metadata.yaml fields, and evals.
+
 ```bash
-ANTHROPIC_API_KEY=sk-... python tools/eval-runner.py skills/my-skill/evals/eval_set.json
+# Validate a single skill
+python tools/skill_validator.py skills/contributed/investment-analyst/
+
+# Validate every skill in the repo
+python tools/skill_validator.py --validate-all
+
+# JSON output for tooling
+python tools/skill_validator.py --validate-all --json
+
+# Curated skills require source tracking
+python tools/skill_validator.py skills/curated/<skill>/ --curated
 ```
 
-## skill-packager.py
-Packages a skill folder into a .skill file for distribution.
+Exit code is `0` on success and `1` on any failure.
+
+## generate_index.py
+
+Reads every `metadata.yaml` under `skills/` and writes `SKILLS_INDEX.md`.
+
 ```bash
-python tools/skill-packager.py skills/my-skill --output ./dist/
+python tools/generate_index.py
 ```
 
-## More tools coming soon
-- migration-assistant.py (convert old prompts to skills)
-- eval-viewer.py (visualize eval results)
+## skill_updater.py
+
+Stub for the curated-skill update workflow. Lists curated skills and appends a
+timestamped entry to `MAINTENANCE_LOG.md`. No external API calls yet.
+
+```bash
+python tools/skill_updater.py --check
+python tools/skill_updater.py --log-only
+```

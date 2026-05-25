@@ -1,0 +1,21 @@
+name: session-handoff
+version: 1.0.0
+author: Nate Herk
+created_date: 2026-05-22
+last_updated: 2026-05-25
+description: >
+  Produces a structured chat-only handoff covering decisions, shipped
+  changes, key files, running state, verification, deferrals, and questions.
+tags: [workflow, handoff, summary, context, agents]
+status: stable
+maintainer: omkar-platform-ai
+quality_score: 0.0
+eval_count: 3
+eval_pass_rate: 0.0
+dependencies: []
+compatibility:
+  mcp_required: false
+source:
+  url: https://github.com/nateherkai/a-bunch-of-skills
+  license: Unspecified
+  last_sync: 2026-05-25

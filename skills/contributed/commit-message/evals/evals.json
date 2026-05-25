@@ -1,0 +1,44 @@
+{
+  "skill_name": "commit-message",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "I added retry logic with exponential backoff to the Stripe webhook handler. Write me a commit message.",
+      "description": "Simple feature addition; should produce a clean conventional commit.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "First line follows pattern: type(scope): short subject in imperative voice",
+        "Type is `feat` and scope reasonably identifies the webhook handler",
+        "Subject line is <= 72 characters and does not end with a period",
+        "Body (if present) explains why the retry was added, not just what",
+        "No reference to 'AI', 'Claude', or boilerplate co-author tags unless asked"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Squash these 4 commits into one for the auth refactor PR: 'wip', 'fix tests', 'rename helper', 'finally working'. The PR migrates session storage from Redis to a Postgres-backed table and removes the old token TTL.",
+      "description": "PR cleanup / squash commit; should produce a single coherent message.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Produces one commit message, not four",
+        "Type is `refactor` or `feat` consistent with the scope of the change",
+        "Subject describes the actual change (session storage migration), not the WIP labels",
+        "Body summarises the migration, mentions the removed TTL, and groups the test/rename details as a single bullet list or paragraph",
+        "Discards the noisy 'wip' / 'finally working' language entirely"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "I removed the deprecated v1 REST endpoints. Anyone still on v1 will get 404s after this lands. Write the commit message.",
+      "description": "Breaking change; must include BREAKING CHANGE footer correctly.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Subject line includes `!` after the type/scope (e.g., `feat(api)!:` or `refactor(api)!:`) OR uses BREAKING CHANGE footer per spec",
+        "Body explicitly contains a `BREAKING CHANGE:` footer with an explanation",
+        "Footer names the affected callers (v1 REST clients) and the symptom (404)",
+        "Subject is still under 72 characters and in imperative voice",
+        "Does not invent migration steps that were not in the prompt; states 'no migration path provided' if applicable"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "skill_name": "obsidian-bases",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Create a Base that shows all my notes tagged #project, sorted by due date, with columns for status, owner, and last modified.",
+      "description": "Basic Base with filter, sort, and column selection.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Produces a valid .base file with the documented YAML / JSON-equivalent structure",
+        "Filter targets the `tag` property and matches '#project' correctly",
+        "Sort is applied to the due-date property in ascending order by default",
+        "Column / view configuration explicitly lists status, owner, last-modified",
+        "Does not invent property names; uses standard Obsidian frontmatter property syntax"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "I want a Base with a card view of my reading list grouped by status (to-read, reading, done), filtered to books only, with a formula showing days since I added each book.",
+      "description": "Medium: card view, grouping, formula column.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Selects the card view (not table) and groups by status",
+        "Filter clause restricts to books only (type or tag based, whichever the property model uses)",
+        "Formula uses the supported Bases function syntax to compute days-since-added (not free-form JavaScript)",
+        "Group order follows a sensible reading flow (e.g., reading first, then to-read, then done) or is explicitly explained",
+        "Outputs a complete .base file the user can drop in and open"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "Refactor my existing meetings.base so each row links to its source note, filters out cancelled meetings, and adds a weekly summary row counting attendees per week.",
+      "description": "Hard: edit existing base, add link column, add aggregation.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Reads the existing meetings.base before editing rather than starting from scratch",
+        "Adds a link / file-name column wired to the underlying note rather than a plain text title",
+        "Filter explicitly excludes status == cancelled (or equivalent) and does not over-filter active rows",
+        "Aggregation uses the documented summary syntax (count, group-by-week) rather than a custom formula hack",
+        "Preserves the user's existing columns and view settings except where the user asked to change them"
+      ]
+    }
+  ]
+}

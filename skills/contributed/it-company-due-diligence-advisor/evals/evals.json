@@ -1,0 +1,44 @@
+{
+  "skill_name": "it-company-due-diligence-advisor",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "I got an offer from a 200-person Series B startup as Senior Backend Engineer. Comp: 28L base + 0.05% equity + standard benefits. Help me evaluate.",
+      "description": "Standard startup offer evaluation.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Evaluates base comp against current Indian market for Sr Backend at Series B (benchmarks, not vibes)",
+        "Sizes the 0.05% equity grant using stated valuation, vesting, exit-scenario sensitivity (not just face value)",
+        "Lists specific questions to ask about the company (runway, burn, last raise, churn) before accepting",
+        "Identifies 3+ red flags this offer does NOT cover (refresher policy, ESOP exercise window, dilution history)",
+        "Concludes with a clear next step (negotiate / due-diligence calls / accept), not a generic 'depends'"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Recruiter says 'we have a great culture, we move fast, you'll learn a lot'. The Glassdoor reviews are mixed and the CEO replied to every negative one defensively. Should I take the interview?",
+      "description": "Soft signals; should detect culture red flags without overreacting.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Names defensive CEO replies as a meaningful (not decisive) red flag about feedback culture",
+        "Distinguishes between recruiter-speak ('great culture') and verifiable signals (review patterns, tenure data, attrition)",
+        "Recommends specific diligence steps before deciding: LinkedIn tenure check on key teams, backchannel via mutuals, specific interview questions",
+        "Does not blanket-reject based on Glassdoor alone; provides a threshold for what would be disqualifying",
+        "Suggests interview questions designed to surface, not validate, the recruiter's claims"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "I have 3 offers: FAANG L5 (1.2Cr TC, 4 days office), Indian unicorn Staff Eng (1.5Cr TC + 0.1%, hybrid), well-funded seed startup CTO (60L + 4% equity, full remote). I'm 34, married, one kid, primary earner. Help me think this through.",
+      "description": "Hard multi-offer tradeoff with significant personal-life constraints.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Compares offers on more than TC: risk profile, learning trajectory, role progression, optionality, family fit",
+        "Models the seed-startup equity realistically (probability of liquidity, dilution, time to exit) instead of taking 4% at face value",
+        "Surfaces specific 'primary earner with kid' constraints (medical insurance, severance, vesting cliff, geographic flexibility)",
+        "Does not pretend to make the decision; structures it as a decision framework the user fills in",
+        "Names 5+ diligence questions per offer the user should still ask before deciding"
+      ]
+    }
+  ]
+}

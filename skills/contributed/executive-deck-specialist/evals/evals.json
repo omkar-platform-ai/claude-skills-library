@@ -1,0 +1,44 @@
+{
+  "skill_name": "executive-deck-specialist",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Build me a 10-slide deck for my board on why we should acquire competitor X. Audience is non-technical board members.",
+      "description": "Topic-only deck for a board audience; tests SCQA framing and executive tone.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Opens with a Situation-Complication-Question-Answer (SCQA) flow on slide 1 or 2",
+        "Top-line answer slide (recommendation) appears within the first 3 slides per Pyramid Principle",
+        "Slides are titled with the takeaway, not the topic (e.g., 'Acquiring X expands our distribution by 40%' not 'Distribution analysis')",
+        "Includes speaker notes for each slide written for verbal delivery, not as a transcript of the slide",
+        "Avoids technical jargon and product internals; framing stays at board-relevant level (strategy, financials, risk)"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Convert this 60-page PDF [attached] into a 15-slide internal engineering all-hands deck. Don't water down the technical content.",
+      "description": "Document-to-deck for a technical audience; should keep depth, apply MECE.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Decomposes the PDF content using MECE so slide topics don't overlap and cover the source faithfully",
+        "Preserves technical depth (architecture diagrams, metrics, code-level detail) rather than summarising into vague themes",
+        "Groups slides into a clear 3-4 act structure (e.g., context → current state → proposal → next steps)",
+        "Speaker notes call out points where the presenter should pause for Q&A or expect pushback",
+        "Flags any content from the source that was intentionally cut and why"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "I have a deck that landed badly with the CFO last week. She said it was 'too long and too vague'. Rebuild it for a 15-minute slot, ruthlessly.",
+      "description": "Hard scenario: ruthless editing under audience-specific feedback.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Cuts slide count to a number defensible in a 15-minute slot (typically 5-8) and justifies the cut",
+        "Restructures around a single CFO-relevant question (cost, ROI, risk) rather than narrating the project",
+        "Every slide leads with a number or decision, not background",
+        "Provides a 30-second opening line the presenter should use to set the answer up front",
+        "Flags any content removed but available as appendix for follow-up Q&A"
+      ]
+    }
+  ]
+}

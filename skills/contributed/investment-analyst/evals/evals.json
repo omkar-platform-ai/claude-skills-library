@@ -1,0 +1,44 @@
+{
+  "skill_name": "investment-analyst",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Analyze HDFC Balanced Advantage Fund for a 35-year-old moderate-risk investor with a 20-year horizon.",
+      "description": "Single-fund analysis for a typical Indian retail investor.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Provides fund category assessment with peer-relative context (not in isolation)",
+        "Discusses risk metrics (standard deviation, beta, downside) and management tenure",
+        "States Indian tax treatment for the relevant holding period (LTCG vs STCG)",
+        "Gives a specific allocation recommendation as % of portfolio with rationale",
+        "Cites historical performance over 3+ years and warns against extrapolation"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "I have INR 50L to invest but also need INR 15L of liquidity in 6 months. I'm a conservative 30-year-old. Build me a portfolio.",
+      "description": "Conflicting goals: investment vs near-term liquidity need.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Acknowledges the conflict between long-term investment and 6-month liquidity need",
+        "Carves out the liquidity bucket (15L) into liquid funds or savings, not equity",
+        "Allocates remaining 35L per the conservative profile (heavy debt, modest equity, low concentration)",
+        "Calls out tax implications of redeeming the liquidity bucket on the chosen instrument",
+        "Provides a specific instrument-level split, not asset-class only"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "Should I rebalance my portfolio? Current: 80% Nasdaq-100 ETF, 15% Indian small-cap MF, 5% Bitcoin. I'm 28, 25-year horizon, can stomach drawdowns.",
+      "description": "Hard case: concentrated portfolio review with overlapping risks.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Flags the 80% single-instrument concentration as the primary issue, even though the holding is broad-market",
+        "Names the overlapping risks (USD exposure, tech-sector concentration via QQQ, growth-style tilt) that the user may not see",
+        "Proposes a target allocation with specific reductions and additions, not generic 'diversify more' advice",
+        "Discusses tax cost of rebalancing (LTCG on QQQ, STCG on small-cap) and suggests phased rebalancing if needed",
+        "Acknowledges 25-year horizon and high risk tolerance, so doesn't over-correct to conservative"
+      ]
+    }
+  ]
+}

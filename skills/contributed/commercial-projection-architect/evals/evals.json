@@ -1,0 +1,44 @@
+{
+  "skill_name": "commercial-projection-architect",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Build a 3-year commercial projection for a new internal developer platform that we expect 800 engineers to use. Initial build cost is roughly $1.2M, ongoing run cost $400k/year.",
+      "description": "Standard internal platform business case with concrete numbers.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Quantifies productivity savings per engineer with explicit assumption (e.g., hours saved per week, fully loaded engineer cost)",
+        "Produces 3-year financial table covering investment, run cost, hard savings, soft savings, and net benefit",
+        "States a clear payback period in months and a 3-year ROI percentage",
+        "Lists 3+ named assumptions that drive the result and flags which are most sensitive",
+        "Includes a one-paragraph executive summary suitable for a leadership steering committee"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Justify replacing our in-house CI runner fleet with a managed SaaS that costs $480k/year. Current self-hosted cost is opaque - we don't know it. What's the business case?",
+      "description": "Medium scenario where the user lacks a baseline cost and the skill must reason about uncertainty.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Explicitly flags missing baseline as a critical gap and proposes how to estimate it (cloud bill share, SRE hours, hardware amortisation)",
+        "Builds a high/expected/low scenario range rather than a single point estimate",
+        "Separates hard savings (cost replacement) from soft savings (faster CI, fewer flakes) with distinct confidence levels",
+        "Identifies switching cost, migration risk, and lock-in as quantified line items, not generic disclaimers",
+        "Recommends a decision (proceed / pilot / reject) tied to a specific threshold in the model"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "We pitched a $4M data platform to the CFO and she said the soft-savings number was 'a fantasy'. Help me defend or rework the case.",
+      "description": "Hard case requiring quantification rigour and pushback handling.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Re-derives soft savings from first principles with named comparable benchmarks or internal evidence",
+        "Distinguishes between hard, semi-hard, and soft benefit categories with separate confidence levels",
+        "Proposes a phased commit (Phase 1 funded only against hard savings) so the case can stand without the disputed soft number",
+        "Names specific risks the CFO is likely concerned about (double-counting, optimistic adoption, unmeasured opportunity cost) and addresses each",
+        "Produces a revised 1-page brief framed as a response, not a re-pitch"
+      ]
+    }
+  ]
+}

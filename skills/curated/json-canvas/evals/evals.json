@@ -1,0 +1,44 @@
+{
+  "skill_name": "json-canvas",
+  "evals": [
+    {
+      "id": "eval_001",
+      "prompt": "Create a JSON Canvas file showing my project's three-stage pipeline: ingest, transform, publish. Connect them in order.",
+      "description": "Simple 3-node linear canvas.",
+      "difficulty": "easy",
+      "expected_output_criteria": [
+        "Produces a valid .canvas JSON document with `nodes` and `edges` arrays",
+        "Each node has required JSON Canvas fields: id, type, x, y, width, height",
+        "Edges connect ingest → transform → publish with `fromNode` and `toNode` referencing the right ids",
+        "Node coordinates are laid out left-to-right (or top-to-bottom) so the flow is readable, not stacked",
+        "File parses as JSON without trailing commas or comments"
+      ]
+    },
+    {
+      "id": "eval_002",
+      "prompt": "Open my existing canvas at notes/architecture.canvas and add a new 'monitoring' group around the three observability nodes (logs, metrics, traces). Don't break existing edges.",
+      "description": "Edit existing canvas; must preserve structure.",
+      "difficulty": "medium",
+      "expected_output_criteria": [
+        "Reads the existing canvas before editing rather than overwriting blindly",
+        "Adds a `group` node type that visually contains the three observability nodes (correct x/y/width/height bounds)",
+        "Does NOT modify or remove any existing edge entries",
+        "Preserves existing node ids so unrelated edges remain valid",
+        "Returns the resulting canvas as valid JSON the user can save back to disk"
+      ]
+    },
+    {
+      "id": "eval_003",
+      "prompt": "Generate a JSON Canvas for a system architecture: 4 services, each calling a shared database and message bus, with two external APIs feeding service A. Include short notes on each connection.",
+      "description": "Hard case: multiple connection types, mixed node types, dense layout.",
+      "difficulty": "hard",
+      "expected_output_criteria": [
+        "Models services, database, and bus as separate nodes (not collapsed)",
+        "Uses appropriate node types (text vs file vs link) per JSON Canvas spec rather than defaulting all to one type",
+        "Edges include `label` strings for the connection notes when supported",
+        "Layout avoids edge crossings where possible and keeps the database/bus central (not stranded at a corner)",
+        "Does not invent JSON Canvas fields outside the spec (e.g., no custom 'connectionType' key)"
+      ]
+    }
+  ]
+}

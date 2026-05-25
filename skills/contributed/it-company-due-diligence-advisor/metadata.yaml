@@ -1,0 +1,19 @@
+name: it-company-due-diligence-advisor
+version: 2.0.0
+author: Omkar G Sonawane
+created_date: 2026-05-22
+last_updated: 2026-05-25
+description: >
+  Evaluates IT companies before accepting an offer: red flags, claim
+  validation, culture, tech stack, leadership, growth, and compensation.
+tags: [career, due-diligence, jobs, it, hiring]
+status: beta
+maintainer: omkar-platform-ai
+quality_score: 0.0
+eval_count: 3
+eval_pass_rate: 0.0
+dependencies: []
+compatibility:
+  mcp_required: false
+source:
+  url: https://github.com/omkar-platform-ai/claude-skills-library

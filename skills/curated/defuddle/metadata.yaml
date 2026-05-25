@@ -1,0 +1,22 @@
+name: defuddle
+version: 1.0.0
+author: Steph Ango (kepano)
+created_date: 2026-05-22
+last_updated: 2026-05-25
+description: >
+  Extracts clean markdown content from web pages using the Defuddle CLI,
+  removing navigation and clutter to save tokens.
+tags: [web, scraping, markdown, cli, defuddle]
+status: stable
+maintainer: omkar-platform-ai
+quality_score: 0.0
+eval_count: 3
+eval_pass_rate: 0.0
+dependencies:
+  - defuddle-cli
+compatibility:
+  mcp_required: false
+source:
+  url: https://github.com/kepano/obsidian-skills
+  license: MIT
+  last_sync: 2026-05-25

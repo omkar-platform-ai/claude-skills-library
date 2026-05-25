@@ -1,0 +1,21 @@
+name: json-canvas
+version: 1.0.0
+author: Steph Ango (kepano)
+created_date: 2026-05-22
+last_updated: 2026-05-25
+description: >
+  Creates and edits JSON Canvas (.canvas) files with nodes, edges, groups,
+  and connections for visual canvases and mind maps in Obsidian.
+tags: [obsidian, canvas, json-canvas, visual, mind-map]
+status: stable
+maintainer: omkar-platform-ai
+quality_score: 0.0
+eval_count: 3
+eval_pass_rate: 0.0
+dependencies: []
+compatibility:
+  mcp_required: false
+source:
+  url: https://github.com/kepano/obsidian-skills
+  license: MIT
+  last_sync: 2026-05-25

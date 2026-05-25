@@ -1,8 +1,7 @@
 # Claude Skills Library
 
-[![GitHub Stars](https://img.shields.io/github/stars/anthropics/claude-skills-library?style=flat-square)](https://github.com/anthropics/claude-skills-library)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
-[![Contributors](https://img.shields.io/badge/contributors-150+-blue?style=flat-square)](#)
+[![Version](https://img.shields.io/badge/version-0.2.0-green?style=flat-square)](VERSION)
 
 A comprehensive, open-source library of **production-grade skills for Claude AI**. Each skill is modular, thoroughly tested, and designed for institutional-quality output across any domain.
 
@@ -24,30 +23,43 @@ Most developers waste time reinventing the wheel.
 
 ### Solution: Pre-Built, Battle-Tested Skills
 This library provides:
-- **50+ vetted skills** ready to use immediately
-- **Institutional-grade quality** — each skill passes rigorous evaluation
-- **Domain expertise baked in** — comprehensive reference materials
+- **Vetted, contributed skills** ready to use immediately (see the table below)
+- **Institutional-grade quality** — every skill ships with structural validation and evaluation cases
+- **Domain expertise baked in** — reference materials live alongside each skill
 - **Open source** — contribute, fork, adapt for your needs
-- **Easy integration** — download `.skill` file and install
 
 ---
 
 ## 📚 Available Skills
 
+Skills are organised into two tiers under `skills/`:
+
+- `skills/contributed/` — skills authored or actively maintained in this repo
+- `skills/curated/` — external upstream skills imported under a permissive license (see [docs/CURATION_POLICY.md](docs/CURATION_POLICY.md))
+
+### Contributed
+
 | Skill | Status | Use Case |
 |---|---|---|
-| **investment-analyst** | 🟢 Production | Portfolio recommendations, multi-instrument analysis (stocks, funds, crypto, bonds) |
-| **fitness-advisor** | 🟢 Production | Personalized fitness coaching, workout plans, nutrition guidance |
-| **executive-deck-specialist** | 🟢 Production | Presentation design with McKinsey frameworks, MECE logic, storytelling |
-| **code-reviewer** | 🟡 Stable | Code review, best practices, security checks (Python, TypeScript, Go, etc.) |
-| **business-analyst** | 🟡 Stable | Market analysis, competitive intelligence, business strategy |
-| **research-synthesizer** | 🟡 Stable | Literature reviews, web research synthesis, report generation |
-| **commercial-projection-architect** | 🟡 Beta | Financial projections, investment justifications, business cases |
-| **it-company-due-diligence** | 🟡 Beta | Job offer evaluation, company assessment, red flag detection |
-| **prompt-engineer** | 🟡 Beta | Prompt optimization, multi-model adaptation (Claude, GPT-4, Gemini) |
-| **content-strategist** | 🔴 Experimental | Marketing strategy, content calendar, audience targeting |
+| **investment-analyst** | 🟢 stable | Portfolio recommendations, multi-instrument analysis (stocks, funds, crypto, bonds) |
+| **fitness-advisor** | 🟢 stable | Personalised fitness coaching, workout plans, nutrition guidance |
+| **executive-deck-specialist** | 🟢 stable | Consultant-grade decks using MECE, Pyramid Principle, SCQA |
+| **commit-message** | 🟢 stable | Conventional Commit messages aligned to enterprise standards |
+| **commercial-projection-architect** | 🟡 beta | Financial projections and investment justifications |
+| **it-company-due-diligence-advisor** | 🟡 beta | Job offer evaluation, red flag detection, comp benchmarking |
 
-**[View full skills index →](SKILLS_INDEX.md)**
+### Curated (external upstream)
+
+| Skill | Status | Upstream | Use Case |
+|---|---|---|---|
+| **defuddle** | 🟢 stable | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Clean markdown extraction from web pages via the Defuddle CLI |
+| **json-canvas** | 🟢 stable | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Create and edit JSON Canvas (.canvas) files for Obsidian |
+| **obsidian-bases** | 🟢 stable | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Create and edit Obsidian Bases (.base) database views |
+| **obsidian-cli** | 🟢 stable | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Interact with Obsidian vaults via the obsidian CLI |
+| **obsidian-markdown** | 🟢 stable | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Author Obsidian Flavored Markdown (wikilinks, callouts, properties) |
+| **session-handoff** | 🟢 stable | [nateherkai/a-bunch-of-skills](https://github.com/nateherkai/a-bunch-of-skills) | Structured end-of-session summary for handing off to a fresh agent |
+
+**[View full auto-generated index →](SKILLS_INDEX.md)**
 
 ---
 
@@ -255,17 +267,20 @@ Tax situation: 30% bracket; should prioritize tax-efficient instruments (ELSS, i
 The library includes tools to make skill creation, testing, and packaging easy:
 
 ```bash
-# Validate a skill's structure
-python tools/skill-validator.py skills/my-skill/
+# Install Python dependencies
+pip install -r tools/requirements.txt
 
-# Run evaluation test cases
-python tools/eval-runner.py skills/my-skill/evals/eval_set.json
+# Validate a single skill
+python tools/skill_validator.py skills/contributed/investment-analyst/
 
-# Package skill into .skill file for distribution
-python tools/skill-packager.py skills/my-skill/ --output ./dist/
+# Validate every skill in the repo
+python tools/skill_validator.py --validate-all
 
-# Create new skill from template
-./scripts/create-skill.sh my-new-skill
+# Regenerate SKILLS_INDEX.md from metadata.yaml files
+python tools/generate_index.py
+
+# Curated-skill upstream check (stub)
+python tools/skill_updater.py --check
 ```
 
 [Full tools documentation →](tools/README.md)
@@ -274,11 +289,9 @@ python tools/skill-packager.py skills/my-skill/ --output ./dist/
 
 ## 📊 Library Stats
 
-- **Total Skills:** 42+
-- **Production Ready:** 15
-- **Community Contributors:** 180+
-- **Monthly Downloads:** 50,000+
-- **Average Evaluation Coverage:** 8.3 test cases per skill
+- **Total Skills:** 12 — 6 contributed · 6 curated (see [SKILLS_INDEX.md](SKILLS_INDEX.md))
+- **Stable:** 10 · **Beta:** 2 · **Deprecated:** 0
+- **Evaluation Coverage:** minimum 3 test cases per skill (validator-enforced)
 - **License:** MIT (permissive, commercial-friendly)
 
 ---

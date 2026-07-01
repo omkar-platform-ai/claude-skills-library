@@ -87,12 +87,29 @@ grep -r "ANTHROPIC_API_KEY=sk\|sk-ant-\|hf_\|PINECONE_API_KEY=pc-" \
 - `README.md` — replace all `your-username` and `your-ec2-ip` placeholders with actual values before committing
 - `.env.example` — must list every env var used anywhere in the codebase, with a comment explaining each
 
-## TASK_COMPLETE comment format
+## TASK_COMPLETE steps
 
+When all criteria in the ticket are met and verification passes:
+
+**Step 1** — Commit and push:
+```bash
+git add -A
+git commit -m "feat(<scope>): <short description> [WEA-XX]"
+git push origin dev
+```
+
+**Step 2** — Set this issue to `in_review` — **not** `done`:
+```
+mcp__paperclip__update_issue(issueId="WEA-XX", status="in_review")
+```
+Do NOT mark your own issue as `done`. shreya-reviewer closes it to `done` after approving.
+
+**Step 3** — Post this as your final comment on the issue:
 ```
 TASK_COMPLETE
 Files created/modified: <list>
 Verification output:
   <paste the full output of the verification command>
 Security scan: clean ✓
+Setting to in_review for code review.
 ```

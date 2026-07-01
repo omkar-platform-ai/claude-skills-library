@@ -30,21 +30,41 @@ For every diff, check:
 7. **Language routing** — `detect_language()` has a try/except fallback; system prompt is loaded from the correct file path.
 8. **Frontend** — no hardcoded `localhost` URLs; all strings go through `useTranslations()`; `npm run type-check` and `npm run lint` are implied to pass.
 
+## Identifying the original work issue
+
+Every review ticket title follows the format: `Review: <task name> (WEA-XX)`.
+The number in parentheses is the **original work issue** — the ticket the engineer submitted.
+For example: "Review: Risk Profiler Backend (WEA-12)" → original work issue is WEA-12.
+
+All Paperclip actions below use MCP tools — do NOT attempt REST API calls directly.
+
 ## Verdict: APPROVED
 
-Post a comment on the issue:
+When code meets all checklist items:
+
+**Step 1** — Post a comment on **this review issue**:
 ```
 APPROVED
 Commit: <hash>
 Checked: <list the checklist items verified>
 ```
-No further action needed.
+Use: `mcp__paperclip__add_issue_comment(issueId="WEA-YY", body="...")`
+
+**Step 2** — Update the **original work issue** (WEA-XX, currently in `in_review`) to `done`:
+```
+mcp__paperclip__update_issue(issueId="WEA-XX", status="done")
+```
+
+**Step 3** — Mark **this review issue** as `done`:
+```
+mcp__paperclip__update_issue(issueId="WEA-YY", status="done")
+```
 
 ## Verdict: CHANGES_REQUESTED
 
 Follow these steps **exactly in order**:
 
-**Step 1** — Post your review comment on the original issue with:
+**Step 1** — Post your detailed review comment on **this review issue**:
 ```
 CHANGES_REQUESTED
 Commit: <hash>
@@ -56,21 +76,36 @@ Commit: <hash>
 ## Fix Required
 <precise, copy-pasteable description of what needs to change>
 ```
+Use: `mcp__paperclip__add_issue_comment(issueId="WEA-YY", body="...")`
 
-**Step 2** — Create a new issue in the `wealthseva-ai` project:
-- Title: `Fix: <short description> (commit <hash>)`
-- Description: the exact file/line locations and fix needed from Step 1 — same level of detail, copy-paste ready
-- Status: `backlog`
-- Assignee: **leave unassigned**
-- Priority: match the severity (high for correctness bugs, medium for style/pattern issues)
-
-**Step 3** — Post a follow-up comment on the **original reviewed issue** (not the new fix issue):
+**Step 2** — Create a new fix issue using the MCP tool:
 ```
-CHANGES_REQUESTED — created <new-issue-identifier> to track the required fix.
-Holding this issue open pending board triage.
+mcp__paperclip__create_issue(
+  companyId="77e28953-ae06-4032-8c9c-223bc9dc037d",
+  projectId="32c9091b-74ba-4fee-930d-1930d536f910",
+  title="Fix: <short description> (commit <hash>)",
+  description="<exact file/line locations and fix needed — copy from Step 1>",
+  status="backlog",
+  priority="high"
+)
 ```
+Do NOT set an assignee. Leave it unassigned.
 
-**Step 4** — Do not change the status of the original issue. Leave it as-is after your comment.
+**Step 3** — Post a comment on the **original work issue** (WEA-XX — NOT this review ticket):
+```
+mcp__paperclip__add_issue_comment(
+  issueId="WEA-XX",
+  body="CHANGES_REQUESTED — created WEA-ZZ to track the required fix. Holding this issue open pending board triage."
+)
+```
+This comment on the original issue is the only notification mechanism. It must go on WEA-XX (the engineer's work ticket), not on this review ticket.
+
+**Step 4** — Do not change the status of the original work issue (WEA-XX). Leave it in `in_review`.
+
+**Step 5** — Mark **this review issue** as `done`:
+```
+mcp__paperclip__update_issue(issueId="WEA-YY", status="done")
+```
 
 ## What you must never do
 
@@ -82,3 +117,5 @@ Holding this issue open pending board triage.
 ## Why this matters
 
 Paperclip has no native push notifications. The comment on the original issue (Step 3) is the only reliable way the board sees that action is needed — a new unlinked card alone will be missed.
+
+Engineer agents set their issues to `in_review` (not `done`) when they finish. You are the one who closes work issues to `done` on APPROVED. Do not skip Steps 2 and 3 of the APPROVED flow.

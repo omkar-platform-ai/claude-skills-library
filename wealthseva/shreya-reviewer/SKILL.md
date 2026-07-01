@@ -30,41 +30,38 @@ For every diff, check:
 7. **Language routing** — `detect_language()` has a try/except fallback; system prompt is loaded from the correct file path.
 8. **Frontend** — no hardcoded `localhost` URLs; all strings go through `useTranslations()`; `npm run type-check` and `npm run lint` are implied to pass.
 
-## Identifying the original work issue
+## How review routing works (execution policy)
 
-Every review ticket title follows the format: `Review: <task name> (WEA-XX)`.
-The number in parentheses is the **original work issue** — the ticket the engineer submitted.
-For example: "Review: Risk Profiler Backend (WEA-12)" → original work issue is WEA-12.
+This project uses Paperclip's native execution policy. You do not need to manage
+issue routing manually — the runtime handles it.
 
-All Paperclip actions below use MCP tools — do NOT attempt REST API calls directly.
+- When an engineer marks their issue `done`, the runtime intercepts and assigns it to you.
+- When you approve (mark `done`), the runtime closes the original work issue.
+- When you request changes (mark `in_progress`), the runtime reassigns to the original engineer.
+
+All Paperclip actions use MCP tools — do NOT attempt REST API calls directly.
 
 ## Verdict: APPROVED
 
 When code meets all checklist items:
 
-**Step 1** — Post a comment on **this review issue**:
+**Step 1** — Post a comment on this issue with your verdict:
 ```
 APPROVED
 Commit: <hash>
 Checked: <list the checklist items verified>
 ```
-Use: `mcp__paperclip__add_issue_comment(issueId="WEA-YY", body="...")`
+Use: `mcp__paperclip__add_issue_comment(issueId="<this-issue-id>", body="...")`
 
-**Step 2** — Update the **original work issue** (WEA-XX, currently in `in_review`) to `done`:
+**Step 2** — Transition this issue to `done`:
 ```
-mcp__paperclip__update_issue(issueId="WEA-XX", status="done")
+mcp__paperclip__update_issue(issueId="<this-issue-id>", status="done")
 ```
-
-**Step 3** — Mark **this review issue** as `done`:
-```
-mcp__paperclip__update_issue(issueId="WEA-YY", status="done")
-```
+The runtime will close the original work issue automatically.
 
 ## Verdict: CHANGES_REQUESTED
 
-Follow these steps **exactly in order**:
-
-**Step 1** — Post your detailed review comment on **this review issue**:
+**Step 1** — Post a comment on this issue with your full findings:
 ```
 CHANGES_REQUESTED
 Commit: <hash>
@@ -76,36 +73,15 @@ Commit: <hash>
 ## Fix Required
 <precise, copy-pasteable description of what needs to change>
 ```
-Use: `mcp__paperclip__add_issue_comment(issueId="WEA-YY", body="...")`
+Use: `mcp__paperclip__add_issue_comment(issueId="<this-issue-id>", body="...")`
 
-**Step 2** — Create a new fix issue using the MCP tool:
+**Step 2** — Transition this issue to `in_progress`:
 ```
-mcp__paperclip__create_issue(
-  companyId="77e28953-ae06-4032-8c9c-223bc9dc037d",
-  projectId="32c9091b-74ba-4fee-930d-1930d536f910",
-  title="Fix: <short description> (commit <hash>)",
-  description="<exact file/line locations and fix needed — copy from Step 1>",
-  status="backlog",
-  priority="high"
-)
+mcp__paperclip__update_issue(issueId="<this-issue-id>", status="in_progress")
 ```
-Do NOT set an assignee. Leave it unassigned.
-
-**Step 3** — Post a comment on the **original work issue** (WEA-XX — NOT this review ticket):
-```
-mcp__paperclip__add_issue_comment(
-  issueId="WEA-XX",
-  body="CHANGES_REQUESTED — created WEA-ZZ to track the required fix. Holding this issue open pending board triage."
-)
-```
-This comment on the original issue is the only notification mechanism. It must go on WEA-XX (the engineer's work ticket), not on this review ticket.
-
-**Step 4** — Do not change the status of the original work issue (WEA-XX). Leave it in `in_review`.
-
-**Step 5** — Mark **this review issue** as `done`:
-```
-mcp__paperclip__update_issue(issueId="WEA-YY", status="done")
-```
+The runtime will automatically reassign to the original engineer with your comment
+as the fix specification. The engineer will resubmit when fixed, and the runtime
+will route back to you for re-review.
 
 ## What you must never do
 

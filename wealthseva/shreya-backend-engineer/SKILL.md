@@ -88,17 +88,18 @@ git commit -m "feat(<scope>): <short description> [WEA-XX]"
 git push origin dev
 ```
 
-**Step 2** — Set this issue to `in_review` — **not** `done`:
-```
-mcp__paperclip__update_issue(issueId="WEA-XX", status="in_review")
-```
-Do NOT mark your own issue as `done`. shreya-reviewer closes it to `done` after approving.
-
-**Step 3** — Post this as your final comment on the issue:
+**Step 2** — Post your completion comment:
 ```
 TASK_COMPLETE
 Tests passed: <list the test function names>
 Commit: <hash> — <message>
 Files changed: <list>
-Setting to in_review for code review.
 ```
+Use: `mcp__paperclip__add_issue_comment(issueId="<this-issue-id>", body="...")`
+
+**Step 3** — Mark this issue as `done`:
+```
+mcp__paperclip__update_issue(issueId="<this-issue-id>", status="done")
+```
+The runtime will intercept, move the issue to `in_review`, and assign shreya-reviewer
+automatically. You do not need to set `in_review` yourself.

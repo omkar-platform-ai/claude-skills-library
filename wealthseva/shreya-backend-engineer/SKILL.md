@@ -77,12 +77,28 @@ fix(idbi): wrap live API returns with source: live envelope
 ```
 Always commit before posting TASK_COMPLETE.
 
-## TASK_COMPLETE comment format
+## TASK_COMPLETE steps
 
-Post this as your final comment on the issue:
+When all criteria in the ticket are met and all tests pass:
+
+**Step 1** — Commit and push:
+```bash
+git add -A
+git commit -m "feat(<scope>): <short description> [WEA-XX]"
+git push origin dev
+```
+
+**Step 2** — Set this issue to `in_review` — **not** `done`:
+```
+mcp__paperclip__update_issue(issueId="WEA-XX", status="in_review")
+```
+Do NOT mark your own issue as `done`. shreya-reviewer closes it to `done` after approving.
+
+**Step 3** — Post this as your final comment on the issue:
 ```
 TASK_COMPLETE
 Tests passed: <list the test function names>
 Commit: <hash> — <message>
 Files changed: <list>
+Setting to in_review for code review.
 ```

@@ -86,8 +86,24 @@ npm run lint         # zero lint errors
 ```
 A broken build blocks the entire team.
 
-## TASK_COMPLETE comment format
+## TASK_COMPLETE steps
 
+When all criteria in the ticket are met and the build gate passes:
+
+**Step 1** — Commit and push:
+```bash
+git add -A
+git commit -m "feat(<scope>): <short description> [WEA-XX]"
+git push origin dev
+```
+
+**Step 2** — Set this issue to `in_review` — **not** `done`:
+```
+mcp__paperclip__update_issue(issueId="WEA-XX", status="in_review")
+```
+Do NOT mark your own issue as `done`. shreya-reviewer closes it to `done` after approving.
+
+**Step 3** — Post this as your final comment on the issue:
 ```
 TASK_COMPLETE
 Build: type-check ✓  lint ✓
@@ -96,4 +112,5 @@ Manual tests passed:
   - Language switch in <Xs> (must be <2s)
 Files changed: <list>
 Commit: <hash>
+Setting to in_review for code review.
 ```

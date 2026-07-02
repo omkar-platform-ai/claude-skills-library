@@ -45,55 +45,52 @@ issue routing manually — the runtime handles it.
 
 All Paperclip actions use MCP tools — do NOT attempt REST API calls directly.
 
-## Verdict: APPROVED
+## Verdict: APPROVED — two MCP calls, in this order, no exceptions
 
-When code meets all checklist items:
-
-**Step 1** — Post a comment on this issue with your verdict:
+**Call 1 of 2 — comment:**
 ```
-APPROVED
-Commit: <hash>
-Checked: <list the checklist items verified>
+mcp__paperclip__add_issue_comment(
+  issueId="<this-issue-id>",
+  body="APPROVED\nCommit: <hash>\nChecked: <checklist items>"
+)
 ```
-Use: `mcp__paperclip__add_issue_comment(issueId="<this-issue-id>", body="...")`
 
-**Step 2** — Transition this issue to `done`:
+**Call 2 of 2 — close:**
 ```
 mcp__paperclip__update_issue(issueId="<this-issue-id>", status="done")
 ```
-The runtime will close the original work issue automatically.
 
-## Verdict: CHANGES_REQUESTED
+Your run is not complete until both calls succeed. Do not write summaries, create docs, or ask the board operator to do anything. Make the two calls and end your run.
 
-**Step 1** — Post a comment on this issue with your full findings:
+---
+
+## Verdict: CHANGES_REQUESTED — two MCP calls, in this order, no exceptions
+
+**Call 1 of 2 — comment:**
 ```
-CHANGES_REQUESTED
-Commit: <hash>
-
-## Issues found
-<file>:<line> — <exact description of the problem and the fix required>
-(repeat for each issue)
-
-## Fix Required
-<precise, copy-pasteable description of what needs to change>
+mcp__paperclip__add_issue_comment(
+  issueId="<this-issue-id>",
+  body="CHANGES_REQUESTED\nCommit: <hash>\n\n## Issues found\n<file>:<line> — <problem and exact fix>\n\n## Fix Required\n<copy-pasteable fix description>"
+)
 ```
-Use: `mcp__paperclip__add_issue_comment(issueId="<this-issue-id>", body="...")`
 
-**Step 2** — Transition this issue to `in_progress`:
+**Call 2 of 2 — return to engineer:**
 ```
 mcp__paperclip__update_issue(issueId="<this-issue-id>", status="in_progress")
 ```
-The runtime will automatically reassign to the original engineer with your comment
-as the fix specification. The engineer will resubmit when fixed, and the runtime
-will route back to you for re-review.
 
-## What you must never do
+Your run is not complete until both calls succeed. Do not create fix issues. Do not write docs. Do not post "board action required" notes. Do not ask anyone to do anything manually. Make the two calls and end your run.
 
-- Do not create a separate fix issue. Under execution policy, `update_issue(in_progress)` returns the work to the engineer — no new ticket needed.
-- Do not modify any files in the repo.
-- Do not attempt REST API calls directly — use only `mcp__paperclip__*` tools.
-- Do not skip the comment step before updating status — `commentRequired: true` is enforced.
+The runtime handles reassignment automatically when you call `update_issue(in_progress)`.
+
+## Rules
+
+- Never create a fix issue — `update_issue(in_progress)` replaces that entirely.
+- Never write files to `docs/`.
+- Never post a second summary comment after the verdict comment.
+- Never use REST API calls — only `mcp__paperclip__*` tools.
+- If `update_issue` fails, report the exact error in a comment and stop. Do not substitute any other action.
 
 ## How engineers signal completion
 
-Engineers mark their issues `done` (not `in_review`). The runtime intercepts and assigns the issue to you for review. When you see an issue assigned to you in `in_review`, that is your signal to review.
+Engineers mark their issues `done`. The runtime intercepts and moves the issue to `in_review`, assigned to you. That assignment is your signal to review.

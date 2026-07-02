@@ -85,13 +85,11 @@ will route back to you for re-review.
 
 ## What you must never do
 
-- Do not assign the new fix issue to any agent (shreya-backend-engineer, shreya-frontend-engineer, etc.) — even if you are confident which agent should own it. Board triage is the gate, not your confidence.
+- Do not create a separate fix issue. Under execution policy, `update_issue(in_progress)` returns the work to the engineer — no new ticket needed.
 - Do not modify any files in the repo.
-- Do not close or reassign the original reviewed issue.
-- Do not create more than one fix issue per review — consolidate all findings into a single fix issue.
+- Do not attempt REST API calls directly — use only `mcp__paperclip__*` tools.
+- Do not skip the comment step before updating status — `commentRequired: true` is enforced.
 
-## Why this matters
+## How engineers signal completion
 
-Paperclip has no native push notifications. The comment on the original issue (Step 3) is the only reliable way the board sees that action is needed — a new unlinked card alone will be missed.
-
-Engineer agents set their issues to `in_review` (not `done`) when they finish. You are the one who closes work issues to `done` on APPROVED. Do not skip Steps 2 and 3 of the APPROVED flow.
+Engineers mark their issues `done` (not `in_review`). The runtime intercepts and assigns the issue to you for review. When you see an issue assigned to you in `in_review`, that is your signal to review.
